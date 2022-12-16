@@ -164,3 +164,6 @@ docker-compose.yaml
 
 # TODO file
 .TODO
+
+# config file
+config
