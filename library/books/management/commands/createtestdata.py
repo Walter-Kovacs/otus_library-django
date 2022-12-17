@@ -3,22 +3,28 @@ from django.core.management.base import BaseCommand
 from books.models import (
     Author,
     Book,
+    Genre,
+    Publisher,
+    WrittenWork,
 )
 
 
 class Command(BaseCommand):
     help = 'Creates test data in database.'
 
-    jack_id: int
-    noon_22century_id: int
+    genres: dict = dict()
+    works: dict = dict()
+    book_id: int
 
     def handle(self, *args, **options):
         if not self.delete_existing_data():
             return
 
         print('Creating data ...')
+        self.create_genre()
         self.create_jack_data()
         self.create_noon_22century_data()
+        self.create_book()
         print('Data created.')
 
         self.show_created_data()
@@ -34,8 +40,18 @@ class Command(BaseCommand):
 
         print('Deleting existing data ...')
         Book.objects.all().delete()
+        Publisher.objects.all().delete()
         Author.objects.all().delete()
+        WrittenWork.objects.all().delete()
+        Genre.objects.all().delete()
         return True
+
+    @classmethod
+    def create_genre(cls):
+        for name in ['Novel', 'Short novel', 'Short story']:
+            genre = Genre.objects.create(name=name)
+            cls.genres[name] = genre
+            print('genre: ', genre.name)
 
     @classmethod
     def create_jack_data(cls):
@@ -43,60 +59,76 @@ class Command(BaseCommand):
             name='Jack London',
             about='John Griffith Chaney (January 12, 1876 – November 22, 1916)',
         )
-        print(author.name)
+        print('author:', author.name)
 
-        book = Book.objects.create(
-            title='The Call of the Wild',
-            abstract='A short adventure novel set in Yukon, Canada, during the 1890s Klondike Gold Rush.',
-            amount=2,
-        )
-        author.books.add(book)
-        print(book.title)
+        works_data = [
+            {
+                'title': 'The Call of the Wild',
+                'genre': cls.genres['Short novel'],
+                'description': 'A short adventure novel set in Yukon, Canada, during the 1890s Klondike Gold Rush.',
+            },
+            {
+                'title': 'White Fang',
+                'genre': cls.genres['Novel'],
+                'description': "White Fang is the name of the book's eponymous character, a wild wolfdog.",
+            },
+        ]
+        for data in works_data:
+            work = WrittenWork.objects.create(**data)
+            author.works.add(work)
+            cls.works[data['title']] = work
+            print('work:', work.title)
 
-        book = Book.objects.create(
-            title='White Fang',
-            abstract="White Fang is the name of the book's eponymous character, a wild wolfdog.",
-            amount=3,
-        )
-        author.books.add(book)
-        print(book.title)
-        
         author.save()
-
-        cls.jack_id = author.id
 
     @classmethod
     def create_noon_22century_data(cls):
         arkadii = Author.objects.create(name='Аркадий Стругацкий')
-        print(arkadii.name)
+        print('author:', arkadii.name)
 
         boris = Author.objects.create(name='Борис Стругацкий')
-        print(boris.name)
+        print('author:', boris.name)
+
+        work = WrittenWork.objects.create(
+            title='Полдень, XXII век',
+            genre=cls.genres['Novel']
+        )
+        cls.works[work.title] = work
+        print('work:', work.title)
+
+        arkadii.works.add(work)
+        arkadii.save()
+        boris.works.add(work)
+        boris.save()
+
+    @classmethod
+    def create_book(cls):
+        publisher = Publisher.objects.create(name='Kovacs And Friends Publications')
+        print('publisher:', publisher.name)
 
         book = Book.objects.create(
-            title='Полдень, XXII век',
-            amount=1,
+            title='Home reading, volume 1',
+            publisher=publisher,
+            publishing_year=2022,
+            abstract='Collection of novels',
+            amount=2,
         )
-        arkadii.books.add(book)
-        arkadii.save()
-        boris.books.add(book)
-        boris.save()
-        print(book.title)
+        cls.book_id = book.id
+        print('book:', book.title)
 
-        cls.noon_22century_id = book.id
+        for work_title in cls.works:
+            book.works.add(cls.works[work_title])
+        book.save()
 
     @classmethod
     def show_created_data(cls):
-        jack = Author.objects.get(id=cls.jack_id)
         print('-' * 50)
-        print(jack.name)
-        for book in jack.books.all():
-            print(' ' * 4, book.title)
+        book = Book.objects.get(id=cls.book_id)
+        print(f'"{book.title}" ({book.abstract}), {book.publisher.name}, {book.publishing_year}, amount: {book.amount})')
 
-        noon_22century = Book.objects.get(id=cls.noon_22century_id)
-        print('-' * 50)
-        print(noon_22century.title)
-        for author in noon_22century.author_set.all():
-            print(' ' * 4, author.name)
+        for work in book.works.all():
+            print(' ' * 4, f'"{work.title}", {work.genre.name}')
+            for author in work.author_set.all():
+                print(' ' * 8, author.name)
 
         print('-' * 50)
