@@ -3,4 +3,37 @@
 {% block body %}
 <h1>Library</h1>
 <div>Welcome to Library!</div>
+<div>
+    <h2>Books</h2>
+    <ul>
+        {% for book in books %}
+            <li>
+                <h3>{{ book.title }}</h3>
+                {{ book.publisher.name }}, {{ book.publishing_year }}
+                <div>
+                    <h4>Abstract:</h4>
+                    {{ book.abstract }}
+                </div>
+                <h4>Content:</h4>
+                <ul>
+                    {% for work in book.works.all %}
+                        <li>
+                            <p></p>
+                            <strong>{{ work.title }}</strong>
+                            <div>
+                                <i>
+                                {{ work.genre.name }},
+                                {% for author in work.author_set.all %}
+                                    {{ author.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                                </i>
+                            </div>
+                            <div>{{ work.description }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
