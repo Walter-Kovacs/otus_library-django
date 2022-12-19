@@ -20,8 +20,12 @@ from books import views
 
 urlpatterns = [
     path('', views.welcome, name='welcome'),
+
     path('genre/', views.genre.GenreListView.as_view(), name='genre-list'),
     path('genre/<int:pk>/', views.genre.GenreDetailView.as_view(), name='genre-details'),
+
+    path('work/', views.work.WrittenWorkListView.as_view(), name='work-list'),
+    path('work/<int:pk>/', views.work.WrittenWorkDetailView.as_view(), name='work-details'),
 
     path('admin/', admin.site.urls),
 ]
