@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Authors
+{% endblock %}
+
+{% block content %}
+  <div class="h1">Authors</div>
+  <ul class="list-group">
+    {% for author in authors %}
+      <li class="list-group-item">
+        <a href="{% url 'author-details' pk=author.pk %}">{{ author.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

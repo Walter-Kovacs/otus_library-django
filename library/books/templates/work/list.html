@@ -8,7 +8,7 @@
   <div class="h1">Works</div>
   <ul class="list-group">
     {% for work in works %}
-      <li>
+      <li class="list-group-item">
         <a href="{% url 'work-details' pk=work.pk %}">
           {{ work.title }} (by
             {% for author in work.author_set.all %}

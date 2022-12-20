@@ -9,7 +9,7 @@
   <div>
     {{ work.genre.name }} of
     {% for author in work.author_set.all %}
-      <a href="{#% url 'author-details' pk=author.pk %#}">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
+      <a href="{% url 'author-details' pk=author.pk %}">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
     {% endfor %}
   </div>
   <div class="h3">Description</div>

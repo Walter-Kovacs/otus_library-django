@@ -27,5 +27,8 @@ urlpatterns = [
     path('work/', views.work.WrittenWorkListView.as_view(), name='work-list'),
     path('work/<int:pk>/', views.work.WrittenWorkDetailView.as_view(), name='work-details'),
 
+    path('author/', views.author.AuthorListView.as_view(), name='author-list'),
+    path('author/<int:pk>', views.author.AuthorDetailView.as_view(), name='author-details'),
+
     path('admin/', admin.site.urls),
 ]
