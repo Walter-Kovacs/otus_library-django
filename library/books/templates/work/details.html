@@ -18,7 +18,7 @@
   <ul class="list-group">
     {% for book in work.book_set.all %}
       <li class="list-group-item">
-        <a href="{#% url 'book-details' pk=book.pk %#}">
+        <a href="{% url 'book-details' pk=book.pk %}">
           {{ book.title }} ({{ book.publisher.name }}, {{ book.publishing_year }})
         </a>
       </li>
