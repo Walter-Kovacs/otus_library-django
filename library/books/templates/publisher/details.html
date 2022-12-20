@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  {{ publisher.name }}
+{% endblock %}
+
+{% block content %}
+  <div class="h1">{{ publisher.name }}</div>
+
+  <div class="h3">Books</div>
+  <ul class="list-group">
+    {% for book in publisher.book_set.all %}
+      <li class="list-group-item">
+        <a href="{% url 'book-details' pk=book.pk %}">{{ book.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

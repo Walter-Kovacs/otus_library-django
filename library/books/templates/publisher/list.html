@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Publishers
+{% endblock %}
+
+{% block content %}
+  <div class="h1">Publishers</div>
+  <ul class="list-group">
+    {% for publisher in publishers %}
+      <li class="list-group-item">
+        <a href="{% url 'publisher-details' pk=publisher.pk %}">{{ publisher.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

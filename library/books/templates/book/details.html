@@ -7,7 +7,7 @@
 {% block content %}
   <div class="h1">{{ book.title }}</div>
   <div>
-    <a href="{# url 'publisher-details' pk=book.publisher.pk #}">
+    <a href="{% url 'publisher-details' pk=book.publisher.pk %}">
       {{ book.publisher.name }}, {{ book.publishing_year }}
     </a>
   </div>
