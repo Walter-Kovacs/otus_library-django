@@ -16,25 +16,28 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from books import views
+from books import views as book_views
+from users import views as user_views
 
 urlpatterns = [
-    path('', views.welcome, name='welcome'),
+    path('', book_views.welcome, name='welcome'),
 
-    path('genre/', views.genre.GenreListView.as_view(), name='genre-list'),
-    path('genre/<int:pk>/', views.genre.GenreDetailView.as_view(), name='genre-details'),
+    path('genre/', book_views.genre.GenreListView.as_view(), name='genre-list'),
+    path('genre/<int:pk>/', book_views.genre.GenreDetailView.as_view(), name='genre-details'),
 
-    path('work/', views.work.WrittenWorkListView.as_view(), name='work-list'),
-    path('work/<int:pk>/', views.work.WrittenWorkDetailView.as_view(), name='work-details'),
+    path('work/', book_views.work.WrittenWorkListView.as_view(), name='work-list'),
+    path('work/<int:pk>/', book_views.work.WrittenWorkDetailView.as_view(), name='work-details'),
 
-    path('author/', views.author.AuthorListView.as_view(), name='author-list'),
-    path('author/<int:pk>/', views.author.AuthorDetailView.as_view(), name='author-details'),
+    path('author/', book_views.author.AuthorListView.as_view(), name='author-list'),
+    path('author/<int:pk>/', book_views.author.AuthorDetailView.as_view(), name='author-details'),
 
-    path('book/', views.book.BookListView.as_view(), name='book-list'),
-    path('book/<int:pk>/', views.book.BookDetailView.as_view(), name='book-details'),
+    path('book/', book_views.book.BookListView.as_view(), name='book-list'),
+    path('book/<int:pk>/', book_views.book.BookDetailView.as_view(), name='book-details'),
 
-    path('publisher/', views.publisher.PublisherListView.as_view(), name='publisher-list'),
-    path('publisher/<int:pk>/', views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
+    path('publisher/', book_views.publisher.PublisherListView.as_view(), name='publisher-list'),
+    path('publisher/<int:pk>/', book_views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
+
+    path('user/registration/', user_views.ReaderCreateView.as_view(), name='user-registration'),
 
     path('admin/', admin.site.urls),
 ]
