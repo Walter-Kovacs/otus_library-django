@@ -37,7 +37,10 @@ urlpatterns = [
     path('publisher/', book_views.publisher.PublisherListView.as_view(), name='publisher-list'),
     path('publisher/<int:pk>/', book_views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
 
-    path('user/registration/', user_views.reader.ReaderCreateView.as_view(), name='user-registration'),
+    path('users/registration/', user_views.reader.ReaderCreateView.as_view(), name='user-registration'),
+    path('users/login/', user_views.reader.ReaderLoginView.as_view(), name='user-login'),
+    path('users/logout/', user_views.reader.ReaderLogoutView.as_view(), name='user-logout'),
+    path('users/profile/', user_views.reader.ReaderProfileView.as_view(), name='user-profile'),
 
     path('admin/', admin.site.urls),
 ]

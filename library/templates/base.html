@@ -51,6 +51,21 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{% url 'genre-list' %}">Genre</a>
                     </li>
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'user-login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'user-registration' %}">Registration</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'user-logout' %}">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'user-profile' %}">Profile</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

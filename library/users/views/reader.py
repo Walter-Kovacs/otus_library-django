@@ -1,4 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 from django.views.generic.base import TemplateResponseMixin
 from django.views.generic.edit import (
     FormMixin,
@@ -31,3 +35,24 @@ class ReaderCreateView(TemplateResponseMixin, FormMixin, ProcessFormView):
         reader.save()
 
         return super().form_valid(form)
+
+
+class ReaderLoginView(LoginView):
+    template_name = 'reader/login.html'
+    success_url = reverse_lazy('reader-profile')
+
+
+class ReaderLogoutView(LogoutView):
+    pass
+
+
+class ReaderProfileView(LoginRequiredMixin, TemplateView):
+    model = Reader
+    template_name = 'reader/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        reader = Reader.objects.filter(user__id=user.id).first()
+        context['reader'] = reader
+        return context

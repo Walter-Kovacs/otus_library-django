@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    {{ user.username }}
+{% endblock %}
+
+{% block content %}
+    <div class="h1">{{ user.username }}</div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th width="100px">First name</th>
+                <td>{{ user.first_name }}</td>
+            </tr>
+            <tr>
+                <th width="100px">Last name</th>
+                <td>{{ user.last_name }}</td>
+            </tr>
+            <tr>
+                <th width="100px">E-mail</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th width="100px">Phone</th>
+                <td>{{ reader.phone }}</td>
+            </tr>
+            <tr>
+                <th width="100px">Address</th>
+                <td>{{ reader.address }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
