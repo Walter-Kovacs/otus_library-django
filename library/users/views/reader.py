@@ -3,17 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
-from django.views.generic.base import TemplateResponseMixin
-from django.views.generic.edit import (
-    FormMixin,
-    ProcessFormView,
-)
+from django.views.generic.edit import FormView
 
 from users.forms import ReaderRegistrationForm
 from users.models import Reader
 
 
-class ReaderCreateView(TemplateResponseMixin, FormMixin, ProcessFormView):
+class ReaderCreateView(FormView):
     form_class = ReaderRegistrationForm
     template_name = 'reader/registration.html'
     success_url = '/'
@@ -47,7 +43,6 @@ class ReaderLogoutView(LogoutView):
 
 
 class ReaderProfileView(LoginRequiredMixin, TemplateView):
-    model = Reader
     template_name = 'reader/profile.html'
 
     def get_context_data(self, **kwargs):
