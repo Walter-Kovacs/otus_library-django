@@ -30,4 +30,14 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="h3">Books</div>
+    <ul class="list-group">
+        {% for book in reader.books.all %}
+            <li class="list-group-item">
+                {{ book.title }}
+                <a class="btn btn-primary" href="{% url 'book-return' pk=book.pk %}">Return</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
