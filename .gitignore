@@ -167,3 +167,5 @@ docker-compose.yaml
 
 # config file
 config
+# django debug toolbar settings
+library/library/settings_debug_toolbar.py
