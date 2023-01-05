@@ -37,6 +37,14 @@ class ReaderLoginView(LoginView):
     template_name = 'reader/login.html'
     success_url = reverse_lazy('reader-profile')
 
+    def form_valid(self, form):
+        user = form.get_user()
+        reader = Reader.objects.filter(user__id=user.id).first()
+        if reader is not None:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
+
 
 class ReaderLogoutView(LogoutView):
     pass
