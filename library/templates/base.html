@@ -59,7 +59,8 @@
                                 <li><a class="dropdown-item" href="{% url 'reader-registration' %}">Registration</a></li>
                             </ul>
                         </li>
-                    {% else %}
+                    {% endif %}
+                    {% if user.reader %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ user.username }}
@@ -69,6 +70,11 @@
                                 <li><a class="dropdown-item" href="{% url 'reader-profile' %}">Profile</a></li>
                             </ul>
                         </li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/admin/">View admin site</a>
+                    </li>
                     {% endif %}
                 </ul>
             </div>

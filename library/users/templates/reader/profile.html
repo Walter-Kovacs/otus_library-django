@@ -22,18 +22,18 @@
             </tr>
             <tr>
                 <th width="100px">Phone</th>
-                <td>{{ reader.phone }}</td>
+                <td>{{ user.reader.phone }}</td>
             </tr>
             <tr>
                 <th width="100px">Address</th>
-                <td>{{ reader.address }}</td>
+                <td>{{ user.reader.address }}</td>
             </tr>
         </tbody>
     </table>
 
     <div class="h3">Books</div>
     <ul class="list-group">
-        {% for book in reader.books.all %}
+        {% for book in user.reader.books.all %}
             <li class="list-group-item">
                 {{ book.title }}
                 <a class="btn btn-primary" href="{% url 'book-return' pk=book.pk %}">Return</a>
