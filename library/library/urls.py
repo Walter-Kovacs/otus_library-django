@@ -39,10 +39,10 @@ urlpatterns = [
     path('publishers/', book_views.publisher.PublisherListView.as_view(), name='publisher-list'),
     path('publishers/<int:pk>/', book_views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
 
-    path('users/registration/', user_views.reader.ReaderCreateView.as_view(), name='user-registration'),
-    path('users/login/', user_views.reader.ReaderLoginView.as_view(), name='user-login'),
-    path('users/logout/', user_views.reader.ReaderLogoutView.as_view(), name='user-logout'),
-    path('users/profile/', user_views.reader.ReaderProfileView.as_view(), name='user-profile'),
+    path('users/readers/registration/', user_views.reader.ReaderCreateView.as_view(), name='reader-registration'),
+    path('users/readers/login/', user_views.reader.ReaderLoginView.as_view(), name='reader-login'),
+    path('users/readers/logout/', user_views.reader.ReaderLogoutView.as_view(), name='reader-logout'),
+    path('users/readers/profile/', user_views.reader.ReaderProfileView.as_view(), name='reader-profile'),
 
     path('admin/', admin.site.urls),
 ]

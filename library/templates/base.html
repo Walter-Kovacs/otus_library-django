@@ -55,8 +55,8 @@
                                 Login
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'user-login' %}">Reader</a></li>
-                                <li><a class="dropdown-item" href="{% url 'user-registration' %}">Registration</a></li>
+                                <li><a class="dropdown-item" href="{% url 'reader-login' %}">Reader</a></li>
+                                <li><a class="dropdown-item" href="{% url 'reader-registration' %}">Registration</a></li>
                             </ul>
                         </li>
                     {% else %}
@@ -65,8 +65,8 @@
                                 {{ user.username }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'user-logout' %}">Logout</a></li>
-                                <li><a class="dropdown-item" href="{% url 'user-profile' %}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'reader-logout' %}">Logout</a></li>
+                                <li><a class="dropdown-item" href="{% url 'reader-profile' %}">Profile</a></li>
                             </ul>
                         </li>
                     {% endif %}
