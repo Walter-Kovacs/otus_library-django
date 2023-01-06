@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path
 
 from books import views as book_views
-from users import views as user_views
+from users.views import librarian as librarian_views
+from users.views import reader as reader_views
 
 urlpatterns = [
     path('', book_views.welcome, name='welcome'),
@@ -39,10 +40,12 @@ urlpatterns = [
     path('publishers/', book_views.publisher.PublisherListView.as_view(), name='publisher-list'),
     path('publishers/<int:pk>/', book_views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
 
-    path('users/readers/registration/', user_views.reader.ReaderCreateView.as_view(), name='reader-registration'),
-    path('users/readers/login/', user_views.reader.ReaderLoginView.as_view(), name='reader-login'),
-    path('users/readers/logout/', user_views.reader.ReaderLogoutView.as_view(), name='reader-logout'),
-    path('users/readers/profile/', user_views.reader.ReaderProfileView.as_view(), name='reader-profile'),
+    path('users/readers/registration/', reader_views.ReaderCreateView.as_view(), name='reader-registration'),
+    path('users/readers/login/', reader_views.ReaderLoginView.as_view(), name='reader-login'),
+    path('users/readers/logout/', reader_views.ReaderLogoutView.as_view(), name='reader-logout'),
+    path('users/readers/profile/', reader_views.ReaderProfileView.as_view(), name='reader-profile'),
+
+    path('users/librarian/registration/', librarian_views.LibrarianCreateView.as_view(), name='librarian-registration'),
 
     path('admin/', admin.site.urls),
 ]

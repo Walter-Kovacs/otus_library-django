@@ -14,7 +14,7 @@ from users.models import Reader
 
 class ReaderCreateView(FormView):
     form_class = ReaderRegistrationForm
-    template_name = 'reader/registration.html'
+    template_name = 'common/registration.html'
     success_url = '/'
 
     def form_valid(self, form):

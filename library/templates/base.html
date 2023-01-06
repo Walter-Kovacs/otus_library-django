@@ -56,7 +56,15 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{% url 'reader-login' %}">Reader</a></li>
-                                <li><a class="dropdown-item" href="{% url 'reader-registration' %}">Registration</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Registration
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'reader-registration' %}">Reader</a></li>
+                                <li><a class="dropdown-item" href="{% url 'librarian-registration' %}">Librarian</a></li>
                             </ul>
                         </li>
                     {% endif %}

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-class ReaderRegistrationForm(UserCreationForm):
+class RegistrationForm(UserCreationForm):
     username = forms.CharField()
     first_name = forms.CharField(
         required=True,
@@ -35,3 +35,11 @@ class ReaderRegistrationForm(UserCreationForm):
             'password1',
             'password2',
         )
+
+
+class ReaderRegistrationForm(RegistrationForm):
+    pass
+
+
+class LibrarianRegistrationForm(RegistrationForm):
+    pass
