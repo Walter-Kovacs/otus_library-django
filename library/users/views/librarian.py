@@ -13,6 +13,7 @@ from users.forms import (
     RegisterLibrarianForm,
 )
 from users.models import Librarian
+from users.views.mixins import AdminPermissionMixin
 
 
 class LibrarianCreateView(FormView):
@@ -39,7 +40,7 @@ class LibrarianCreateView(FormView):
         return super().form_valid(form)
 
 
-class NewLibrarianListView(LoginRequiredMixin, ListView):
+class NewLibrarianListView(AdminPermissionMixin, ListView):
     model = Librarian
     template_name = 'librarian/list_new.html'
     context_object_name = 'librarians'
@@ -48,7 +49,7 @@ class NewLibrarianListView(LoginRequiredMixin, ListView):
         return Librarian.objects.filter(staff_number='')  # librarian is not in Library staff yet <=> staff_number = ''
 
 
-class RegisterLibrarian(LoginRequiredMixin, UpdateView):
+class RegisterLibrarian(AdminPermissionMixin, UpdateView):
     model = Librarian
     form_class = RegisterLibrarianForm
     template_name = 'librarian/register.html'
@@ -63,7 +64,7 @@ class RegisterLibrarian(LoginRequiredMixin, UpdateView):
         return super().get(request, *args, **kwargs)
 
 
-class LibrarianListView(LoginRequiredMixin, ListView):
+class LibrarianListView(AdminPermissionMixin, ListView):
     model = Librarian
     template_name = 'librarian/list.html'
     context_object_name = 'librarians'
