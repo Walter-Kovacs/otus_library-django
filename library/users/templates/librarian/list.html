@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Librarians
+{% endblock %}
+
+{% block content %}
+  <div class="h1">Librarians</div>
+  <ul class="list-group">
+    {% for librarian in librarians %}
+      <li class="list-group-item">
+        {{ librarian.user.last_name }} {{ librarian.user.first_name }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

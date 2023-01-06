@@ -80,9 +80,18 @@
                         </li>
                     {% endif %}
                     {% if user.is_superuser %}
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/admin/">View admin site</a>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Librarians
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'new-librarian-list' %}">Register new</a></li>
+                                <li><a class="dropdown-item" href="{% url 'librarian-list' %}">All</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/admin/">View admin site</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>

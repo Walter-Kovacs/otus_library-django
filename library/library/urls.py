@@ -45,7 +45,14 @@ urlpatterns = [
     path('users/readers/logout/', reader_views.ReaderLogoutView.as_view(), name='reader-logout'),
     path('users/readers/profile/', reader_views.ReaderProfileView.as_view(), name='reader-profile'),
 
-    path('users/librarian/registration/', librarian_views.LibrarianCreateView.as_view(), name='librarian-registration'),
+    path(
+        'users/librarians/registration/',
+        librarian_views.LibrarianCreateView.as_view(),
+        name='librarian-registration'
+    ),
+    path('users/librarians/new', librarian_views.NewLibrarianListView.as_view(), name='new-librarian-list'),
+    path('users/librarians/<int:pk>/register', librarian_views.RegisterLibrarian.as_view(), name='register-librarian'),
+    path('users/librarians/', librarian_views.LibrarianListView.as_view(), name='librarian-list'),
 
     path('admin/', admin.site.urls),
 ]

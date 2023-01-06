@@ -19,3 +19,6 @@ class Reader(LibraryAbstractUser):
 
 class Librarian(LibraryAbstractUser):
     staff_number = models.CharField(max_length=8)
+
+    def is_active(self):
+        return self.staff_number != ''

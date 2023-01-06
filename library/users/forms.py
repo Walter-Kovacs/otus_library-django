@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from users.models import Librarian
+
 
 class RegistrationForm(UserCreationForm):
     username = forms.CharField()
@@ -43,3 +45,14 @@ class ReaderRegistrationForm(RegistrationForm):
 
 class LibrarianRegistrationForm(RegistrationForm):
     pass
+
+
+class RegisterLibrarianForm(forms.ModelForm):
+    staff_number = forms.CharField(
+        min_length=1,
+        max_length=8,
+    )
+
+    class Meta:
+        model = Librarian
+        fields = ('staff_number', )
