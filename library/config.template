@@ -1,0 +1,4 @@
+# Rename this file to 'config' and fill values.
+[DEFAULT]
+SECRET_KEY=secret key
+DEBUG=1 or 0
