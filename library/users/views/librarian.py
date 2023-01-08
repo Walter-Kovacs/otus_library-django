@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -68,3 +69,16 @@ class LibrarianListView(AdminLoginRequiredMixin, AdminPassesTestMixin, ListView)
     model = Librarian
     template_name = 'librarian/list.html'
     context_object_name = 'librarians'
+
+
+class LibrarianLoginView(LoginView):
+    template_name = 'librarian/login.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        user = form.get_user()
+        librarian = Librarian.objects.filter(user__id=user.id).first()
+        if librarian is not None:
+            return super().form_valid(form)
+        else:
+            return super().form_invalid(form)
