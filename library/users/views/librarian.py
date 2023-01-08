@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -13,7 +12,7 @@ from users.forms import (
     RegisterLibrarianForm,
 )
 from users.models import Librarian
-from users.views.mixins import AdminPermissionMixin
+from users.views.mixins import AdminLoginRequiredMixin, AdminPassesTestMixin
 
 
 class LibrarianCreateView(FormView):
@@ -40,7 +39,8 @@ class LibrarianCreateView(FormView):
         return super().form_valid(form)
 
 
-class NewLibrarianListView(AdminPermissionMixin, ListView):
+class NewLibrarianListView(AdminLoginRequiredMixin, AdminPassesTestMixin, ListView):
+
     model = Librarian
     template_name = 'librarian/list_new.html'
     context_object_name = 'librarians'
@@ -49,7 +49,7 @@ class NewLibrarianListView(AdminPermissionMixin, ListView):
         return Librarian.objects.filter(staff_number='')  # librarian is not in Library staff yet <=> staff_number = ''
 
 
-class RegisterLibrarian(AdminPermissionMixin, UpdateView):
+class RegisterLibrarian(AdminLoginRequiredMixin, AdminPassesTestMixin, UpdateView):
     model = Librarian
     form_class = RegisterLibrarianForm
     template_name = 'librarian/register.html'
@@ -64,7 +64,7 @@ class RegisterLibrarian(AdminPermissionMixin, UpdateView):
         return super().get(request, *args, **kwargs)
 
 
-class LibrarianListView(AdminPermissionMixin, ListView):
+class LibrarianListView(AdminLoginRequiredMixin, AdminPassesTestMixin, ListView):
     model = Librarian
     template_name = 'librarian/list.html'
     context_object_name = 'librarians'

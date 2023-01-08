@@ -9,6 +9,9 @@ from django.views.generic.edit import FormView
 from books.forms import GetBookForm, ReturnBookForm
 from books.models import Book
 from users.models import Reader
+from users.views.mixins import (
+    ReaderLoginRequiredMixin, ReaderPassesTestMixin,
+)
 
 
 class BookListView(ListView):
@@ -23,7 +26,7 @@ class BookDetailView(DetailView):
     context_object_name = 'book'
 
 
-class GetBookView(LoginRequiredMixin, DetailView, FormView):
+class GetBookView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, DetailView, FormView):
     model = Book
     context_object_name = 'book'
     form_class = GetBookForm

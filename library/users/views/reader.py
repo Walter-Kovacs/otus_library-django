@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
@@ -10,6 +9,7 @@ from django.views.generic import (
 
 from users.forms import ReaderRegistrationForm
 from users.models import Reader
+from users.views.mixins import ReaderLoginRequiredMixin, ReaderPassesTestMixin
 
 
 class ReaderCreateView(FormView):
@@ -53,7 +53,7 @@ class ReaderLogoutView(LogoutView):
     pass
 
 
-class ReaderProfileView(LoginRequiredMixin, TemplateView):
+class ReaderProfileView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, TemplateView):
     template_name = 'reader/profile.html'
 
     def get(self, request, *args, **kwargs):
