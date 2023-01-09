@@ -80,6 +80,16 @@
                             </ul>
                         </li>
                     {% endif %}
+                    {% if user.librarian %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'librarian-logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
                     {% if user.is_superuser %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

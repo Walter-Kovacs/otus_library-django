@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -59,7 +59,7 @@ class RegisterLibrarian(AdminLoginRequiredMixin, AdminPassesTestMixin, UpdateVie
 
     def get(self, request, *args, **kwargs):
         librarian = self.get_object()
-        if librarian.is_active():
+        if librarian.is_active:
             return redirect('/')
 
         return super().get(request, *args, **kwargs)
@@ -78,7 +78,11 @@ class LibrarianLoginView(LoginView):
     def form_valid(self, form):
         user = form.get_user()
         librarian = Librarian.objects.filter(user__id=user.id).first()
-        if librarian is not None:
+        if librarian is not None and librarian.is_active:
             return super().form_valid(form)
         else:
             return super().form_invalid(form)
+
+
+class LibrarianLogoutView(LogoutView):
+    pass
