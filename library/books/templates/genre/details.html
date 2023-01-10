@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block content %}
-  <div class="h1">{{ object.name }}</div>
+  <div class="h1">
+    {{ object.name }}
+    {% if user.librarian %}
+      <a class="btn btn-primary" href="{% url 'genre-update' pk=object.pk %}">Update</a>
+    {% endif %}
+  </div>
   <ul class="list-group">
     {% for work in object.writtenwork_set.all %}
     <li class="list-group-item">
