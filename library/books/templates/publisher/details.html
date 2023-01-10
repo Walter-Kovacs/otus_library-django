@@ -8,8 +8,8 @@
   <div class="h1">
     {{ publisher.name }}
     {% if user.librarian %}
-      <a class="btn btn-primary" href="{% url 'publisher-update' pk=object.pk %}">Update</a>
-      <a class="btn btn-danger" href="{% url 'publisher-delete' pk=object.pk %}">Delete</a>
+      <a class="btn btn-primary" href="{% url 'publisher-update' pk=publisher.pk %}">Update</a>
+      <a class="btn btn-danger" href="{% url 'publisher-delete' pk=publisher.pk %}">Delete</a>
     {% endif %}
   </div>
 
