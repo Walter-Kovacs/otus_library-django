@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Delete author
+{% endblock %}
+
+{% block content %}
+    <div class="h3">Delete author: {{ author.name }}</div>
+    <form method="post">
+        {% csrf_token %}
+
+        <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+{% endblock %}

@@ -34,6 +34,9 @@ urlpatterns = [
 
     path('authors/', book_views.author.AuthorListView.as_view(), name='author-list'),
     path('authors/<int:pk>/', book_views.author.AuthorDetailView.as_view(), name='author-details'),
+    path('authors/create/', book_views.author.AuthorCreateView.as_view(), name='author-create'),
+    path('authors/<int:pk>/update/', book_views.author.AuthorUpdateView.as_view(), name='author-update'),
+    path('authors/<int:pk>/delete/', book_views.author.AuthorDeleteView.as_view(), name='author-delete'),
 
     path('books/', book_views.book.BookListView.as_view(), name='book-list'),
     path('books/<int:pk>/', book_views.book.BookDetailView.as_view(), name='book-details'),
