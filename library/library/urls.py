@@ -42,6 +42,9 @@ urlpatterns = [
 
     path('publishers/', book_views.publisher.PublisherListView.as_view(), name='publisher-list'),
     path('publishers/<int:pk>/', book_views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
+    path('publishers/create/', book_views.publisher.PublisherCreateView.as_view(), name='publisher-create'),
+    path('publishers/<int:pk>/update/', book_views.publisher.PublisherUpdateView.as_view(), name='publisher-update'),
+    path('publishers/<int:pk>/delete/', book_views.publisher.PublisherDeleteView.as_view(), name='publisher-delete'),
 
     path('users/readers/registration/', reader_views.ReaderCreateView.as_view(), name='reader-registration'),
     path('users/readers/login/', reader_views.ReaderLoginView.as_view(), name='reader-login'),
