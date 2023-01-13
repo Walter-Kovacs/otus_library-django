@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Book
+{% endblock %}
+
+{% block content %}
+    <div class="h3">Book:</div>
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="mt-2">{{ field.label }}</div>
+            <div>{{ field }}</div>
+            {% if field.errors %}
+                {{ field.errors }}
+            {% endif %}
+        {% endfor %}
+
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+
+        <button class="btn btn-success mt-2" type="submit">Save</button>
+    </form>
+{% endblock %}

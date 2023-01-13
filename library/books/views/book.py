@@ -1,15 +1,22 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
+    CreateView,
+    DeleteView,
     DetailView,
     ListView,
+    UpdateView,
 )
 from django.views.generic.edit import FormView
 
-from books.forms import GetBookForm, ReturnBookForm
+from books.forms import (
+    GetBookForm,
+    ReturnBookForm,
+)
 from books.models import Book
 from users.models import Reader
 from users.views.mixins import (
+    LibrarianLoginRequiredMixin, LibrarianPassesTestMixin,
     ReaderLoginRequiredMixin, ReaderPassesTestMixin,
 )
 
@@ -24,6 +31,26 @@ class BookDetailView(DetailView):
     model = Book
     template_name = 'book/details.html'
     context_object_name = 'book'
+
+
+class BookCreateView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, CreateView):
+    model = Book
+    fields = '__all__'
+    template_name = 'book/form.html'
+    success_url = reverse_lazy('book-list')
+
+
+class BookUpdateView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, UpdateView):
+    model = Book
+    fields = '__all__'
+    template_name = 'book/form.html'
+    success_url = reverse_lazy('book-list')
+
+
+class BookDeleteView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, DeleteView):
+    model = Book
+    template_name = 'book/delete.html'
+    success_url = reverse_lazy('book-list')
 
 
 class GetBookView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, DetailView, FormView):
