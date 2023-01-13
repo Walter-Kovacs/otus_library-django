@@ -31,6 +31,9 @@ urlpatterns = [
 
     path('works/', book_views.work.WrittenWorkListView.as_view(), name='work-list'),
     path('works/<int:pk>/', book_views.work.WrittenWorkDetailView.as_view(), name='work-details'),
+    path('works/create/', book_views.work.WrittenWorkCreateView.as_view(), name='work-create'),
+    path('works/<int:pk>/update/', book_views.work.WrittenWorkUpdateView.as_view(), name='work-update'),
+    path('works/<int:pk>/delete/', book_views.work.WrittenWorkDeleteView.as_view(), name='work-delete'),
 
     path('authors/', book_views.author.AuthorListView.as_view(), name='author-list'),
     path('authors/<int:pk>/', book_views.author.AuthorDetailView.as_view(), name='author-details'),

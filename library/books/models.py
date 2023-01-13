@@ -5,6 +5,9 @@ from django.db import models
 class Genre(models.Model):
     name = models.CharField(max_length=32, unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class WrittenWork(models.Model):
     title = models.CharField(max_length=200)
@@ -16,6 +19,9 @@ class Author(models.Model):
     name = models.CharField(max_length=64, unique=True)
     about = models.TextField(blank=True)
     works = models.ManyToManyField(WrittenWork)
+
+    def __str__(self):
+        return self.name
 
 
 class Publisher(models.Model):

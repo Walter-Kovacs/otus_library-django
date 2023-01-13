@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block content %}
-  <div class="h1">{{ work.title }}</div>
+  <div class="h1">
+    {{ work.title }}
+    {% if user.librarian %}
+      <a class="btn btn-primary" href="{% url 'work-update' pk=work.pk %}">Update</a>
+      <a class="btn btn-danger" href="{% url 'work-delete' pk=work.pk %}">Delete</a>
+    {% endif %}
+  </div>
   <div>
     {{ work.genre.name }} of
     {% for author in work.author_set.all %}
