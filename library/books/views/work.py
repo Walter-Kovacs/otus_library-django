@@ -36,17 +36,6 @@ class WrittenWorkCreateView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixi
     template_name = 'work/form.html'
     success_url = reverse_lazy('work-list')
 
-    def form_valid(self, form: WrittenWorkForm):
-        work = WrittenWork.objects.create(
-            title=form.title,
-            genre=form.genre_object,
-            description=form.description
-        )
-
-        work.author_set.add(*form.authors_ids)
-
-        return super().form_valid(form)
-
 
 class WrittenWorkUpdateView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, UpdateView):
     model = WrittenWork

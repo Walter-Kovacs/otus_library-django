@@ -34,17 +34,10 @@ class WrittenWorkForm(forms.ModelForm):
         )
 
     @property
-    def title(self):
-        return self.data['title']
-
-    @property
     def authors_ids(self) -> tuple:
         return tuple(map(int, self.data.getlist('authors')))
 
-    @property
-    def genre_object(self):
-        return Genre.objects.get(id=self.data['genre'])
-
-    @property
-    def description(self):
-        return self.data['description']
+    def save(self, commit=True):
+        work = super().save(commit)
+        work.author_set.add(*self.authors_ids)
+        return work
