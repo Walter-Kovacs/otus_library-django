@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Get book
+{% endblock %}
+
+{% block content %}
+    <div class="h1">{{ book.title }}</div>
+    <div>
+        <a href="{% url 'publisher-details' pk=book.publisher.pk %}">
+            {{ book.publisher.name }}, {{ book.publishing_year }}
+        </a>
+    </div>
+    <div class="h3">Abstract</div>
+    <div>{{ book.abstract }}</div>
+
+    <div class="container mt-5">
+        Enter the date when you want to get this book
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button class="btn btn-success" type="submit">Return</button>
+        </form>
+    </div>
+{% endblock %}

@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block content %}
-  <div class="h1">{{ author.name }}</div>
+  <div class="h1">
+    {{ author.name }}
+    {% if user.librarian %}
+      <a class="btn btn-primary" href="{% url 'author-update' pk=author.pk %}">Update</a>
+      <a class="btn btn-danger" href="{% url 'author-delete' pk=author.pk %}">Delete</a>
+    {% endif %}
+  </div>
   <div class="h3">About</div>
   <div>{{ author.about }}</div>
   <div class="h3">Works</div>

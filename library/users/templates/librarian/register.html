@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Register librarian
+{% endblock %}
+
+{% block content %}
+    <div class="h1">Register new librarian:</div>
+    <div class="h3">{{ librarian.user.last_name }} {{ librarian.user.first_name }}</div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th width="100px">Username</th>
+                <td>{{ librarian.user.username }}</td>
+            </tr>
+            <tr>
+                <th width="100px">E-mail</th>
+                <td>{{ librarian.user.email }}</td>
+            </tr>
+            <tr>
+                <th width="100px">Phone</th>
+                <td>{{ librarian.phone }}</td>
+            </tr>
+            <tr>
+                <th width="100px">Address</th>
+                <td>{{ librarian.address }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="btn btn-success" type="submit">Register</button>
+    </form>
+{% endblock %}

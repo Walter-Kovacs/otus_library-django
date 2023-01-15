@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Update author
+{% endblock %}
+
+{% block content %}
+    <div class="h3">Update author {{ author.name }}</div>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="btn btn-success" type="submit">Update</button>
+    </form>
+{% endblock %}
