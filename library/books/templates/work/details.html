@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  {{ work.title }}
+{% endblock %}
+
+{% block content %}
+  <div class="h1">{{ work.title }}</div>
+  <div>
+    {{ work.genre.name }} of
+    {% for author in work.author_set.all %}
+      <a href="{% url 'author-details' pk=author.pk %}">{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </div>
+  <div class="h3">Description</div>
+  <div>{{ work.description }}</div>
+  <div class="h3">Books containing this work</div>
+  <ul class="list-group">
+    {% for book in work.book_set.all %}
+      <li class="list-group-item">
+        <a href="{% url 'book-details' pk=book.pk %}">
+          {{ book.title }} ({{ book.publisher.name }}, {{ book.publishing_year }})
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

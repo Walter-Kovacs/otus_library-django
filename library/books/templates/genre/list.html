@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Genre
+{% endblock %}
+
+{% block content %}
+  <div class="h1">Genres</div>
+  <ul class="list-group">
+    {% for genre in object_list %}
+      <li class="list-group-item">
+        <a href="{% url 'genre-details' pk=genre.pk %}">{{genre.name}}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

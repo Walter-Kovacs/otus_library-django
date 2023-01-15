@@ -16,9 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-import books.views
+from books import views
 
 urlpatterns = [
-    path('', books.views.welcome),
+    path('', views.welcome, name='welcome'),
+
+    path('genre/', views.genre.GenreListView.as_view(), name='genre-list'),
+    path('genre/<int:pk>/', views.genre.GenreDetailView.as_view(), name='genre-details'),
+
+    path('work/', views.work.WrittenWorkListView.as_view(), name='work-list'),
+    path('work/<int:pk>/', views.work.WrittenWorkDetailView.as_view(), name='work-details'),
+
+    path('author/', views.author.AuthorListView.as_view(), name='author-list'),
+    path('author/<int:pk>/', views.author.AuthorDetailView.as_view(), name='author-details'),
+
+    path('book/', views.book.BookListView.as_view(), name='book-list'),
+    path('book/<int:pk>/', views.book.BookDetailView.as_view(), name='book-details'),
+
+    path('publisher/', views.publisher.PublisherListView.as_view(), name='publisher-list'),
+    path('publisher/<int:pk>/', views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
+
     path('admin/', admin.site.urls),
 ]

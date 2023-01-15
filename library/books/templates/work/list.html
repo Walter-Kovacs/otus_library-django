@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Works
+{% endblock %}
+
+{% block content %}
+  <div class="h1">Works</div>
+  <ul class="list-group">
+    {% for work in works %}
+      <li class="list-group-item">
+        <a href="{% url 'work-details' pk=work.pk %}">
+          {{ work.title }} (by
+            {% for author in work.author_set.all %}
+              {{ author.name }}{% if not forloop.last %}, {% endif %}{% endfor %})
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
