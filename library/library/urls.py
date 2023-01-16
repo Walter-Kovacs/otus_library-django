@@ -65,8 +65,8 @@ urlpatterns = [
         librarian_views.LibrarianCreateView.as_view(),
         name='librarian-registration'
     ),
-    path('users/librarians/new', librarian_views.NewLibrarianListView.as_view(), name='new-librarian-list'),
-    path('users/librarians/<int:pk>/register', librarian_views.RegisterLibrarian.as_view(), name='register-librarian'),
+    path('users/librarians/new/', librarian_views.NewLibrarianListView.as_view(), name='new-librarian-list'),
+    path('users/librarians/<int:pk>/register/', librarian_views.RegisterLibrarian.as_view(), name='register-librarian'),
     path('users/librarians/', librarian_views.LibrarianListView.as_view(), name='librarian-list'),
     path('users/librarians/login/', librarian_views.LibrarianLoginView.as_view(), name='librarian-login'),
     path('users/librarians/logout/', librarian_views.LibrarianLogoutView.as_view(), name='librarian-logout'),
