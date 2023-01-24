@@ -1,5 +1,6 @@
-from django.core.validators import MinValueValidator
 from django.db import models
+
+from users.models import Reader
 
 
 class Genre(models.Model):
@@ -52,12 +53,33 @@ class Book(models.Model):
     publishing_year = models.IntegerField()
     abstract = models.TextField(blank=True)
     works = models.ManyToManyField(WrittenWork)
-    amount = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(limit_value=0),
-        ],
-    )
 
     class Meta:
         ordering = ('title', )
+
+
+class BookCopy(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    inventory_number = models.CharField(max_length=16, unique=True)
+    reader = models.ForeignKey(Reader, on_delete=models.PROTECT, blank=True, null=True)
+    reader_date = models.DateField(blank=True, null=True)
+
+    @staticmethod
+    def number_all() -> int:
+        return BookCopy.objects.count()
+
+    @staticmethod
+    def number_in_storage() -> int:
+        return BookCopy.objects.filter(reader__isnull=True).count()
+
+    @staticmethod
+    def number_lend() -> int:
+        return BookCopy.objects.filter(reader__isnull=False).count()
+
+    @staticmethod
+    def storage_copies():
+        return BookCopy.objects.filter(reader__isnull=True)
+
+    @staticmethod
+    def lend_copies():
+        return BookCopy.objects.filter(reader__isnull=False)
