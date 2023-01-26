@@ -27,5 +27,6 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        echo -e "[DEFAULT]\nSECRET_KEY=secret\nDEBUG=0" > library/config
-        python library/manage.py test
+        cd library/
+        echo -e "[DEFAULT]\nSECRET_KEY=secret\nDEBUG=0" > config
+        python manage.py test
