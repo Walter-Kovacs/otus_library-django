@@ -4,3 +4,4 @@ from . import work
 from . import author
 from . import book
 from . import publisher
+from . import bookcopy

@@ -57,6 +57,9 @@ class Book(models.Model):
     class Meta:
         ordering = ('title', )
 
+    def __str__(self):
+        return f'{self.title} ({self.publisher.name}, {self.publishing_year})'
+
 
 class BookCopy(models.Model):
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
