@@ -5,6 +5,7 @@ from mixer.backend.django import mixer
 from books.models import (
     Author,
     Genre,
+    Publisher,
     WrittenWork,
 )
 
@@ -75,5 +76,28 @@ class TestAuthorModel(TestCase):
     def test_ordering(self):
         authors = Author.objects.all()
         names = [author.name for author in authors]
+        sorted_names = sorted(names)
+        self.assertListEqual(names, sorted_names)
+
+
+class TestPublisherModel(TestCase):
+
+    def setUp(self) -> None:
+        num_of_publishers = 13
+        faker = Faker()
+        names = [faker.unique.company() for i in range(num_of_publishers)]
+        mixer.cycle(num_of_publishers).blend(Publisher, name=(name for name in names))
+
+    def tearDown(self) -> None:
+        Publisher.objects.all().delete()
+
+    def test_str(self):
+        publishers = Publisher.objects.all()
+        for p in publishers:
+            self.assertEqual(str(p), p.name)
+
+    def test_ordering(self):
+        publishers = Publisher.objects.all()
+        names = [p.name for p in publishers]
         sorted_names = sorted(names)
         self.assertListEqual(names, sorted_names)
