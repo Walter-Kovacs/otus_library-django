@@ -3,6 +3,7 @@ from faker import Faker
 from mixer.backend.django import mixer
 
 from books.models import (
+    Author,
     Genre,
     WrittenWork,
 )
@@ -53,3 +54,26 @@ class TestWrittenWorkModel(TestCase):
         titles = [work.title for work in works]
         sorted_titles = sorted(titles)
         self.assertListEqual(titles, sorted_titles)
+
+
+class TestAuthorModel(TestCase):
+
+    def setUp(self) -> None:
+        num_of_authors = 13
+        faker = Faker()
+        names = [faker.unique.name() for i in range(num_of_authors)]
+        mixer.cycle(num_of_authors).blend(Author, name=(name for name in names))
+
+    def tearDown(self) -> None:
+        Author.objects.all().delete()
+
+    def test_str(self):
+        authors = Author.objects.all()
+        for author in authors:
+            self.assertEqual(str(author), author.name)
+
+    def test_ordering(self):
+        authors = Author.objects.all()
+        names = [author.name for author in authors]
+        sorted_names = sorted(names)
+        self.assertListEqual(names, sorted_names)
