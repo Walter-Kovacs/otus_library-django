@@ -4,6 +4,7 @@ from mixer.backend.django import mixer
 
 from books.models import (
     Author,
+    Book,
     Genre,
     Publisher,
     WrittenWork,
@@ -101,3 +102,24 @@ class TestPublisherModel(TestCase):
         names = [p.name for p in publishers]
         sorted_names = sorted(names)
         self.assertListEqual(names, sorted_names)
+
+
+class TestBookModel(TestCase):
+
+    def setUp(self) -> None:
+        num_of_books = 13
+        faker = Faker()
+        titles = [faker.unique.catch_phrase() for i in range(num_of_books)]
+        mixer.cycle(num_of_books).blend(Book, title=(title for title in titles))
+
+    def tearDown(self) -> None:
+        Book.objects.all().delete()
+        Publisher.objects.all().delete()
+        WrittenWork.objects.all().delete()
+        Genre.objects.all().delete()
+
+    def test_ordering(self):
+        books = Book.objects.all()
+        titles = [book.title for book in books]
+        sorted_titles = sorted(titles)
+        self.assertListEqual(titles, sorted_titles)
