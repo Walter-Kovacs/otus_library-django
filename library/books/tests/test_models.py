@@ -120,6 +120,14 @@ class TestBookModel(TestCase):
         WrittenWork.objects.all().delete()
         Genre.objects.all().delete()
 
+    def test_str(self):
+        books = Book.objects.all()
+        for book in books:
+            self.assertEqual(
+                str(book),
+                f'{book.title} ({book.publisher}, {book.publishing_year})'
+            )
+
     def test_ordering(self):
         books = Book.objects.all()
         titles = [book.title for book in books]
