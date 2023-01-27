@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from books.models import Book
-
 
 class LibraryAbstractUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -14,7 +12,7 @@ class LibraryAbstractUser(models.Model):
 
 
 class Reader(LibraryAbstractUser):
-    books = models.ManyToManyField(Book)
+    pass
 
 
 class Librarian(LibraryAbstractUser):
