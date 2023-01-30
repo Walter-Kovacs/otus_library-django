@@ -67,6 +67,9 @@ class BookCopy(models.Model):
     reader = models.ForeignKey(Reader, on_delete=models.PROTECT, blank=True, null=True)
     reader_date = models.DateField(blank=True, null=True)
 
+    def __str__(self):
+        return self.inventory_number
+
     @staticmethod
     def number_all() -> int:
         return BookCopy.objects.count()

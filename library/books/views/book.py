@@ -10,11 +10,13 @@ from django.views.generic import (
 from django.views.generic.edit import FormView
 
 from books.forms import (
+    LendBookForm,
     RequestBookForm,
     ReturnBookForm,
 )
 from books.models import (
     Book,
+    BookCopy,
     BookRequest,
 )
 from users.models import Reader
@@ -71,6 +73,31 @@ class RequestBookView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, DetailVie
             book_request = book.bookrequest_set.filter(reader=reader).first()
             if book_request is None:
                 BookRequest.objects.create(book=book, reader=reader)
+
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        self.object = self.get_object()  # otherwise the object is missing
+        return super().form_invalid(form)
+
+
+class LendBookView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, DetailView, FormView):
+    model = BookRequest
+    context_object_name = 'request'
+    form_class = LendBookForm
+    template_name = 'book/lend.html'
+    success_url = '/'
+
+    def get_form(self, form_class=None):
+        book_request = self.get_object()
+        form = super().get_form(form_class)
+        form.fields['inventory_number'].queryset = BookCopy.objects.filter(book=book_request.book, reader__isnull=False)
+        return form
+
+    def form_valid(self, form):
+        book_request = self.get_object()
+        # TODO: set reader and current date to book copy
+        print(book_request)
 
         return super().form_valid(form)
 

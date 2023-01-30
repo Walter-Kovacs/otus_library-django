@@ -2,13 +2,21 @@ from django import forms
 
 from .models import (
     Author,
-    Genre,
+    BookCopy,
     WrittenWork,
 )
 
 
 class RequestBookForm(forms.Form):
     pass
+
+
+class LendBookForm(forms.Form):
+    inventory_number = forms.ModelChoiceField(
+        queryset=None,
+        empty_label=None,
+    )
+    # TODO: lend_date
 
 
 class ReturnBookForm(forms.Form):

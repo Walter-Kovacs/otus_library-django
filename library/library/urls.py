@@ -47,6 +47,7 @@ urlpatterns = [
     path('books/<int:pk>/update/', book_views.book.BookUpdateView.as_view(), name='book-update'),
     path('books/<int:pk>/delete/', book_views.book.BookDeleteView.as_view(), name='book-delete'),
     path('books/<int:pk>/request/', book_views.book.RequestBookView.as_view(), name='book-request'),
+    path('books/<int:pk>/lend/', book_views.book.LendBookView.as_view(), name='book-lend'),
     path('books/<int:pk>/return/', book_views.book.ReturnBookView.as_view(), name='book-return'),
 
     path('books/copies/add/', book_views.bookcopy.BookCopyCreateView.as_view(), name='bookcopy-create'),
