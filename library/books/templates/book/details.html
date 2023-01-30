@@ -37,6 +37,6 @@
   <div class="mt-3">Available: {{ book.amount }}</div>
 
   <div class="mt-3">
-    <a class="btn btn-primary" href="{% url 'book-get' pk=book.pk %}">Get</a>
+    <a class="btn btn-primary" href="{% url 'book-request' pk=book.pk %}">Get</a>
   </div>
 {% endblock %}

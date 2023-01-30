@@ -86,3 +86,8 @@ class BookCopy(models.Model):
     @staticmethod
     def lend_copies():
         return BookCopy.objects.filter(reader__isnull=False)
+
+
+class BookRequest(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    reader = models.ForeignKey(Reader, on_delete=models.PROTECT)

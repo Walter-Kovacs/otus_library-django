@@ -7,10 +7,8 @@ from .models import (
 )
 
 
-class GetBookForm(forms.Form):
-    when_date = forms.DateField(
-        label="Date",
-    )
+class RequestBookForm(forms.Form):
+    pass
 
 
 class ReturnBookForm(forms.Form):

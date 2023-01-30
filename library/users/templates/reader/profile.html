@@ -40,4 +40,12 @@
             </li>
         {% endfor %}
     </ul>
+    <div class="h3">Book requests</div>
+    <ul class="list-group">
+        {% for request in user.reader.bookrequest_set.all %}
+            <li class="list-group-item">
+                <a href="{% url 'book-details' pk=request.book.pk %}">{{ request.book.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

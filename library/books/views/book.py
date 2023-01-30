@@ -10,10 +10,13 @@ from django.views.generic import (
 from django.views.generic.edit import FormView
 
 from books.forms import (
-    GetBookForm,
+    RequestBookForm,
     ReturnBookForm,
 )
-from books.models import Book
+from books.models import (
+    Book,
+    BookRequest,
+)
 from users.models import Reader
 from users.views.mixins import (
     LibrarianLoginRequiredMixin, LibrarianPassesTestMixin,
@@ -53,11 +56,11 @@ class BookDeleteView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, Dele
     success_url = reverse_lazy('book-list')
 
 
-class GetBookView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, DetailView, FormView):
+class RequestBookView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, DetailView, FormView):
     model = Book
     context_object_name = 'book'
-    form_class = GetBookForm
-    template_name = 'book/get.html'
+    form_class = RequestBookForm
+    template_name = 'book/request.html'
     success_url = reverse_lazy('book-list')
 
     def form_valid(self, form):
@@ -65,11 +68,9 @@ class GetBookView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, DetailView, F
         reader = Reader.objects.filter(user__id=user.id).first()
         if reader is not None:
             book = self.get_object()
-            if book not in reader.books.all() and book.amount > 0:
-                reader.books.add(book)
-                reader.save()
-                book.amount -= 1
-                book.save()
+            book_request = book.bookrequest_set.filter(reader=reader).first()
+            if book_request is None:
+                BookRequest.objects.create(book=book, reader=reader)
 
         return super().form_valid(form)
 
