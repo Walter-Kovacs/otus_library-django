@@ -31,16 +31,16 @@
         </tbody>
     </table>
 
-    <div class="h3">Books</div>
+    <div class="h3 mt-3">Books</div>
     <ul class="list-group">
-        {% for book in user.reader.books.all %}
+        {% for copy in user.reader.bookcopy_set.all %}
             <li class="list-group-item">
-                {{ book.title }}
-                <a class="btn btn-primary" href="{% url 'book-return' pk=book.pk %}">Return</a>
+                <a href="{% url 'book-details' pk=copy.book.pk %}">{{ copy.book.title }}</a>
+                (inventory number: {{ copy.inventory_number }})
             </li>
         {% endfor %}
     </ul>
-    <div class="h3">Book requests</div>
+    <div class="h3 mt-3">Book requests</div>
     <ul class="list-group">
         {% for request in user.reader.bookrequest_set.all %}
             <li class="list-group-item">

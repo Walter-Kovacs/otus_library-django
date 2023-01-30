@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="h2">Lend a book:</div>
+    <div class="h2">Lend a book to {{ request.reader.user.first_name }} {{ request.reader.user.last_name }}:</div>
     <div class="h3">
         {{ request.book.title }} ({{ request.book.publisher.name }}, {{ request.book.publishing_year }})
     </div>

@@ -16,7 +16,10 @@ class LendBookForm(forms.Form):
         queryset=None,
         empty_label=None,
     )
-    # TODO: lend_date
+
+    @property
+    def copy_id(self) -> int:
+        return int(self.data['inventory_number'])
 
 
 class ReturnBookForm(forms.Form):

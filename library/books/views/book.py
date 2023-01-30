@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -91,13 +93,16 @@ class LendBookView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, Detail
     def get_form(self, form_class=None):
         book_request = self.get_object()
         form = super().get_form(form_class)
-        form.fields['inventory_number'].queryset = BookCopy.objects.filter(book=book_request.book, reader__isnull=False)
+        form.fields['inventory_number'].queryset = BookCopy.objects.filter(book=book_request.book, reader__isnull=True)
         return form
 
     def form_valid(self, form):
         book_request = self.get_object()
-        # TODO: set reader and current date to book copy
-        print(book_request)
+        copy = BookCopy.objects.get(id=form.copy_id)
+        copy.reader = book_request.reader
+        copy.reader_date = date.today()
+        copy.save()
+        book_request.delete()
 
         return super().form_valid(form)
 

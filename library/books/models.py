@@ -67,6 +67,9 @@ class BookCopy(models.Model):
     reader = models.ForeignKey(Reader, on_delete=models.PROTECT, blank=True, null=True)
     reader_date = models.DateField(blank=True, null=True)
 
+    class Meta:
+        ordering = ('book', )
+
     def __str__(self):
         return self.inventory_number
 
@@ -94,3 +97,6 @@ class BookCopy(models.Model):
 class BookRequest(models.Model):
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
     reader = models.ForeignKey(Reader, on_delete=models.PROTECT)
+
+    class Meta:
+        ordering = ('book', )
