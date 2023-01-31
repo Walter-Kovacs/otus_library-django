@@ -39,6 +39,18 @@ class BookDetailView(DetailView):
     template_name = 'book/details.html'
     context_object_name = 'book'
 
+    def get_context_data(self, **kwargs):
+        book = self.get_object()
+        context = super().get_context_data(**kwargs)
+        all_copies = BookCopy.objects.filter(book=book)
+        reader_copies = sorted(
+            [copy for copy in all_copies if copy.reader is not None],
+            key=lambda copy: copy.reader.user.first_name
+        )
+        context['all_copies'] = all_copies
+        context['reader_copies'] = reader_copies
+        return context
+
 
 class BookCreateView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, CreateView):
     model = Book

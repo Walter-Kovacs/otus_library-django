@@ -45,6 +45,29 @@
       {% endfor %}
     </ul>
   </div>
+  <div class="mt-3">
+    <div class="h3">Current Readers</div>
+    <ul class="list-group-item">
+      {% for copy in reader_copies %}
+        <li class="list-group-item">
+          <a href="">
+            {{ copy.reader.user.first_name }} {{ copy.reader.user.last_name }},
+            {{ copy.inventory_number }}, lend date: {{ copy.reader_date }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="mt-3">
+    <div class="h3">All copies</div>
+    <ul class="list-group-item">
+      {% for copy in all_copies %}
+        <li class="list-group-item">
+          <a href="">{{ copy.inventory_number }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
   {% endif %}
 
   <div class="mt-3">
