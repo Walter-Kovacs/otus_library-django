@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Return book
+{% endblock %}
+
+{% block content %}
+    <div class="h3">{{ copy.book.title }}</div>
+    <div>Inventory number: {{ copy.inventory_number }}</div>
+    <div>Reader: {{ copy.reader.user.first_name }} {{ copy.reader.user.last_name }}</div>
+    <div>Lend date: {{ copy.reader_date }}</div>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-success mt-2" type="submit">Return</button>
+    </form>
+{% endblock %}

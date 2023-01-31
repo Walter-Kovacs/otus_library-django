@@ -57,12 +57,21 @@ class Book(models.Model):
     class Meta:
         ordering = ('title', )
 
+    def __str__(self):
+        return f'{self.title} ({self.publisher.name}, {self.publishing_year})'
+
 
 class BookCopy(models.Model):
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
     inventory_number = models.CharField(max_length=16, unique=True)
     reader = models.ForeignKey(Reader, on_delete=models.PROTECT, blank=True, null=True)
     reader_date = models.DateField(blank=True, null=True)
+
+    class Meta:
+        ordering = ('book', )
+
+    def __str__(self):
+        return self.inventory_number
 
     @staticmethod
     def number_all() -> int:
@@ -83,3 +92,11 @@ class BookCopy(models.Model):
     @staticmethod
     def lend_copies():
         return BookCopy.objects.filter(reader__isnull=False)
+
+
+class BookRequest(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    reader = models.ForeignKey(Reader, on_delete=models.PROTECT)
+
+    class Meta:
+        ordering = ('book', )

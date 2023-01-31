@@ -2,21 +2,28 @@ from django import forms
 
 from .models import (
     Author,
-    Genre,
+    BookCopy,
     WrittenWork,
 )
 
 
-class GetBookForm(forms.Form):
-    when_date = forms.DateField(
-        label="Date",
+class RequestBookForm(forms.Form):
+    pass
+
+
+class LendBookForm(forms.Form):
+    inventory_number = forms.ModelChoiceField(
+        queryset=None,
+        empty_label=None,
     )
+
+    @property
+    def copy_id(self) -> int:
+        return int(self.data['inventory_number'])
 
 
 class ReturnBookForm(forms.Form):
-    return_date = forms.DateField(
-        label="Date of return",
-    )
+    pass
 
 
 class WrittenWorkForm(forms.ModelForm):

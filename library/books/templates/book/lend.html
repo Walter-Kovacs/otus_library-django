@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Lend book
+{% endblock %}
+
+{% block content %}
+    <div class="h2">Lend a book to {{ request.reader.user.first_name }} {{ request.reader.user.last_name }}:</div>
+    <div class="h3">
+        {{ request.book.title }} ({{ request.book.publisher.name }}, {{ request.book.publishing_year }})
+    </div>
+
+    <form class="mt-2" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class="btn btn-success" type="submit">Lend the book</button>
+    </form>
+{% endblock %}

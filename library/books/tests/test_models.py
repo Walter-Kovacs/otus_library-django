@@ -120,6 +120,14 @@ class TestBookModel(TestCase):
         WrittenWork.objects.all().delete()
         Genre.objects.all().delete()
 
+    def test_str(self):
+        books = Book.objects.all()
+        for book in books:
+            self.assertEqual(
+                str(book),
+                f'{book.title} ({book.publisher}, {book.publishing_year})'
+            )
+
     def test_ordering(self):
         books = Book.objects.all()
         titles = [book.title for book in books]
@@ -141,16 +149,22 @@ class TestBookCopyModel(TestCase):
         Reader.objects.all().delete()
 
     def test_number_of_all_copies(self):
-        self.assertEquals(
+        self.assertEqual(
             BookCopy.number_all(),
             TestBookCopyModel.number_of_storage_copies + TestBookCopyModel.number_of_lend_copies
         )
 
     def test_number_of_storage_copies(self):
-        self.assertEquals(BookCopy.number_in_storage(), TestBookCopyModel.number_of_storage_copies)
+        self.assertEqual(BookCopy.number_in_storage(), TestBookCopyModel.number_of_storage_copies)
 
-    def test_number_of_lent_copies(self):
-        self.assertEquals(BookCopy.number_lend(), TestBookCopyModel.number_of_lend_copies)
+    def test_number_of_lend_copies(self):
+        self.assertEqual(BookCopy.number_lend(), TestBookCopyModel.number_of_lend_copies)
+
+    def test_number_check_sum(self):
+        self.assertEqual(
+            BookCopy.number_all(),
+            BookCopy.number_in_storage() + BookCopy.number_lend()
+        )
 
     def test_storage_copies(self):
         copies = BookCopy.objects.filter(reader__isnull=True)
