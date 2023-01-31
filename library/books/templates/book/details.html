@@ -50,7 +50,7 @@
     <ul class="list-group-item">
       {% for copy in reader_copies %}
         <li class="list-group-item">
-          <a href="">
+          <a href="{% url 'bookcopy-return' pk=copy.pk %}">
             {{ copy.reader.user.first_name }} {{ copy.reader.user.last_name }},
             {{ copy.inventory_number }}, lend date: {{ copy.reader_date }}
           </a>

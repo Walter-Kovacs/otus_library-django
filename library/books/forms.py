@@ -23,9 +23,7 @@ class LendBookForm(forms.Form):
 
 
 class ReturnBookForm(forms.Form):
-    return_date = forms.DateField(
-        label="Date of return",
-    )
+    pass
 
 
 class WrittenWorkForm(forms.ModelForm):
