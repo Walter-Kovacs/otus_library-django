@@ -5,22 +5,21 @@
 {% endblock %}
 
 {% block content %}
+<div class="container mt-3">
   <div class="h1">
     {{ book.title }}
-    {% if user.librarian %}
-      <a class="btn btn-primary" href="{% url 'book-update' pk=book.pk %}">Update</a>
-      <a class="btn btn-danger" href="{% url 'book-delete' pk=book.pk %}">Delete</a>
-    {% endif %}
   </div>
   <div>
     <a href="{% url 'publisher-details' pk=book.publisher.pk %}">
       {{ book.publisher.name }}, {{ book.publishing_year }}
     </a>
   </div>
-
+</div>
+<div class="container mt-3">
   <div class="h3">Abstract</div>
   <div>{{ book.abstract }}</div>
-
+</div>
+<div class="container mt-3">
   <div class="h3">Content</div>
   <ul class="list-group">
     {% for work in book.works.all %}
@@ -33,44 +32,8 @@
       </li>
     {% endfor %}
   </ul>
-
-  {% if user.librarian %}
-  <div class="mt-3">
-    <div class="h3">Book requests</div>
-    <ul class="list-group">
-      {% for request in book.bookrequest_set.all %}
-        <li class="list-group-item">
-          <a href="{% url 'book-lend' pk=request.pk %}">{{ request.reader.user.username }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="mt-3">
-    <div class="h3">Current Readers</div>
-    <ul class="list-group-item">
-      {% for copy in reader_copies %}
-        <li class="list-group-item">
-          <a href="{% url 'bookcopy-return' pk=copy.pk %}">
-            {{ copy.reader.user.first_name }} {{ copy.reader.user.last_name }},
-            {{ copy.inventory_number }}, lend date: {{ copy.reader_date }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="mt-3">
-    <div class="h3">All copies</div>
-    <ul class="list-group-item">
-      {% for copy in all_copies %}
-        <li class="list-group-item">
-          <a href="">{{ copy.inventory_number }}</a>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-  <div class="mt-3">
-    <a class="btn btn-primary" href="{% url 'book-request' pk=book.pk %}">Get</a>
-  </div>
+</div>
+<div class="container mt-3">
+  <a class="btn btn-primary" href="{% url 'book-request' pk=book.pk %}">Get</a>
+</div>
 {% endblock %}
