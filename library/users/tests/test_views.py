@@ -17,7 +17,7 @@ class LibrarianViewContext(TestCase):
         faker = Faker()
         staff_nums = [faker.pystr(min_chars=8, max_chars=8) for i in range(4)]
         mixer.cycle(4).blend(Librarian, staff_number=(sn for sn in staff_nums))
-        mixer.cycle(2).blend(Librarian, staff_number='')
+        mixer.cycle(2).blend(Librarian, staff_number=None)
 
         User.objects.create_superuser(username=self.admin_username, password=self.admin_password)
         self.client.login(username=self.admin_username, password=self.admin_password)
@@ -29,11 +29,11 @@ class LibrarianViewContext(TestCase):
     def test_only_new_librarians_in_new_librarian_view_context(self):
         response = self.client.get('/users/librarians/new/')
         context_objects = response.context['librarians']
-        new_librarians = Librarian.objects.filter(staff_number='')
+        new_librarians = Librarian.objects.filter(staff_number__isnull=True)
         self.assertEquals(list(new_librarians), list(context_objects))
 
     def test_all_librarians_in_librarian_list_view_context(self):
-        response = self.client.get('/users/librarians/new/')
+        response = self.client.get('/users/librarians/')
         context_objects = response.context['librarians']
-        all_librarians = Librarian.objects.filter(staff_number='')
+        all_librarians = Librarian.objects.all()
         self.assertEquals(list(all_librarians), list(context_objects))

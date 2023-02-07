@@ -9,6 +9,7 @@ class LibraryAbstractUser(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ('user__last_name', )
 
 
 class Reader(LibraryAbstractUser):
@@ -16,8 +17,8 @@ class Reader(LibraryAbstractUser):
 
 
 class Librarian(LibraryAbstractUser):
-    staff_number = models.CharField(max_length=8)
+    staff_number = models.CharField(max_length=8, unique=True, null=True)
 
     @property
     def is_active(self):
-        return self.staff_number != ''
+        return self.staff_number is not None

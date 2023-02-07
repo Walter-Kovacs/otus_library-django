@@ -47,7 +47,8 @@ class NewLibrarianListView(AdminLoginRequiredMixin, AdminPassesTestMixin, ListVi
     context_object_name = 'librarians'
 
     def get_queryset(self):
-        return Librarian.objects.filter(staff_number='')  # librarian is not in Library staff yet <=> staff_number = ''
+        # librarian is not in Library staff yet <=> staff_number = Null
+        return Librarian.objects.filter(staff_number__isnull=True)
 
 
 class RegisterLibrarian(AdminLoginRequiredMixin, AdminPassesTestMixin, UpdateView):

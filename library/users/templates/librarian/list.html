@@ -6,11 +6,26 @@
 
 {% block content %}
   <div class="h1">Librarians</div>
-  <ul class="list-group">
-    {% for librarian in librarians %}
-      <li class="list-group-item">
-        {{ librarian.user.last_name }} {{ librarian.user.first_name }}
-      </li>
-    {% endfor %}
-  </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Librarian</th>
+          <th scope="col">Staff number</th>
+          <th scope="col">Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for librarian in librarians %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            {% with user=librarian.user %}
+              <td>{{ user.last_name }} {{ user.first_name }}</td>
+              <td>{{ librarian.staff_number }}</td>
+              <td>{{ user.username }}</td>
+            {% endwith %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 {% endblock %}
