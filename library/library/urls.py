@@ -53,6 +53,11 @@ urlpatterns = [
     path('books/copies/<int:pk>/return', book_views.bookcopy.BookCopyReturnView.as_view(), name='bookcopy-return'),
 
     path('books/requests/', book_views.bookrequest.BookRequestListView.as_view(), name='bookrequest-list'),
+    path(
+        'books/requests/<int:pk>/delete/',
+        book_views.bookrequest.BookRequestDeleteView.as_view(),
+        name='bookrequest-delete'
+),
 
     path('publishers/', book_views.publisher.PublisherListView.as_view(), name='publisher-list'),
     path('publishers/<int:pk>/', book_views.publisher.PublisherDetailView.as_view(), name='publisher-details'),

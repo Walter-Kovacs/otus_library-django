@@ -14,6 +14,7 @@
           <th scope="col">Publisher</th>
           <th scope="col">Requesting reader</th>
           <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,7 @@
             <td>{{ book.publisher }}, {{ book.publishing_year }}</td>
             <td>{{ person.first_name }} {{person.last_name}}</td>
             <td><a class="btn btn-primary" href="{% url 'book-lend' pk=request.pk %}">Lend</a></td>
+            <td><a class="btn btn-danger" href="{% url 'bookrequest-delete' pk=request.pk %}">Delete</a></td>
           {% endwith %}
         </tr>
         {% endfor %}

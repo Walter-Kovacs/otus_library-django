@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    Delete book
+{% endblock %}
+
+{% block content %}
+  <div class="h3">Delete book request</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Book</th>
+        <th scope="col">Requesting reader</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% with person=request.reader.user %}
+          <td>{{ request.book }}</td>
+          <td>{{ person.first_name }} {{person.last_name}}</td>
+        {% endwith %}
+      </tr>
+    </tbody>
+  </table>
+
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Delete</button>
+  </form>
+{% endblock %}
