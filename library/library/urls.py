@@ -52,6 +52,8 @@ urlpatterns = [
     path('books/copies/add/', book_views.bookcopy.BookCopyCreateView.as_view(), name='bookcopy-create'),
     path('books/copies/<int:pk>/return', book_views.bookcopy.BookCopyReturnView.as_view(), name='bookcopy-return'),
 
+    path('books/requests/', book_views.bookrequest.BookRequestListView.as_view(), name='bookrequest-list'),
+
     path('publishers/', book_views.publisher.PublisherListView.as_view(), name='publisher-list'),
     path('publishers/<int:pk>/', book_views.publisher.PublisherDetailView.as_view(), name='publisher-details'),
     path('publishers/create/', book_views.publisher.PublisherCreateView.as_view(), name='publisher-create'),

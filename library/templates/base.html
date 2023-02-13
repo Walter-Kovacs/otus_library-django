@@ -41,6 +41,9 @@
                             Books
                         </a>
                         <ul class="dropdown-menu">
+                            {% if user.librarian %}
+                                <li><a class="dropdown-item" href="{% url 'bookrequest-list' %}">Book Request</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'author-list' %}">Authors</a></li>
                             <li><a class="dropdown-item" href="{% url 'work-list' %}">Works</a></li>
                             <li><a class="dropdown-item" href="{% url 'book-list' %}">Books</a></li>

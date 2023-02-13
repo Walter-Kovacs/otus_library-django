@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+  Book requests
+{% endblock %}
+
+{% block content %}
+  <div class="h1">Book requests</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Book</th>
+          <th scope="col">Publisher</th>
+          <th scope="col">Requesting reader</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for request in requests %}
+        <tr>
+          {% with book=request.book person=request.reader.user %}
+            <td>{{ forloop.counter }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.publisher }}, {{ book.publishing_year }}</td>
+            <td>{{ person.first_name }} {{person.last_name}}</td>
+            <td><a class="btn btn-primary" href="{% url 'book-lend' pk=request.pk %}">Lend</a></td>
+          {% endwith %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}
