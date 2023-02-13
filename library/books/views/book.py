@@ -108,7 +108,7 @@ class LendBookView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, Detail
     context_object_name = 'request'
     form_class = LendBookForm
     template_name = 'book/lend.html'
-    success_url = '/'
+    success_url = reverse_lazy('bookrequest-list')
 
     def get_form(self, form_class=None):
         book_request = self.get_object()
