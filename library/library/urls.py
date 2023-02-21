@@ -69,6 +69,7 @@ urlpatterns = [
     path('users/readers/login/', reader_views.ReaderLoginView.as_view(), name='reader-login'),
     path('users/readers/logout/', reader_views.ReaderLogoutView.as_view(), name='reader-logout'),
     path('users/readers/profile/', reader_views.ReaderProfileView.as_view(), name='reader-profile'),
+    path('users/readers/<int:pk>/', reader_views.ReaderDetailView.as_view(), name='reader-details'),
 
     path(
         'users/librarians/registration/',

@@ -3,13 +3,19 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
+    DetailView,
     FormView,
     TemplateView,
 )
 
 from users.forms import ReaderRegistrationForm
 from users.models import Reader
-from users.views.mixins import ReaderLoginRequiredMixin, ReaderPassesTestMixin
+from users.views.mixins import (
+    LibrarianLoginRequiredMixin,
+    LibrarianPassesTestMixin,
+    ReaderLoginRequiredMixin,
+    ReaderPassesTestMixin,
+)
 
 
 class ReaderCreateView(FormView):
@@ -63,3 +69,9 @@ class ReaderProfileView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, Templat
             return super().get(request, *args, **kwargs)
         else:
             return redirect('/')
+
+
+class ReaderDetailView(LibrarianLoginRequiredMixin, LibrarianPassesTestMixin, DetailView):
+    model = Reader
+    template_name = 'reader/detail.html'
+    context_object_name = 'reader'

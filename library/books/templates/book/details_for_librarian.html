@@ -116,7 +116,13 @@
             {% for copy in reader_copies %}
               <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td>{% with person=copy.reader.user %}{{ person.first_name }} {{person.last_name}}{% endwith %}</td>
+                <td>
+                  {% with person=copy.reader.user %}
+                  <a href="{% url 'reader-details' pk=person.reader.pk %}">
+                    {{ person.first_name }} {{person.last_name}}
+                  </a>
+                  {% endwith %}
+                </td>
                 <td><a href="{% url 'bookcopy-return' pk=copy.pk %}">{{ copy.inventory_number }}</a></td>
                 <td>{{ copy.reader_date }}</td>
               </tr>
