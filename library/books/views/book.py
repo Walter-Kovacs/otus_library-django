@@ -87,11 +87,26 @@ class RequestBookView(ReaderLoginRequiredMixin, ReaderPassesTestMixin, DetailVie
     template_name = 'book/request.html'
     success_url = reverse_lazy('book-list')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.no_available_copies = False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.no_available_copies:
+            context['no_available_copies'] = True
+            self.no_available_copies = False
+        return context
+
     def form_valid(self, form):
+        book = self.get_object()
+        if BookCopy.number_in_storage(book.id) < 1:
+            self.no_available_copies = True
+            return self.form_invalid(form)
+
         user = self.request.user
         reader = Reader.objects.filter(user__id=user.id).first()
         if reader is not None:
-            book = self.get_object()
             book_request = book.bookrequest_set.filter(reader=reader).first()
             if book_request is None:
                 BookRequest.objects.create(book=book, reader=reader)

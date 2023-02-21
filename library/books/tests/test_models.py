@@ -140,9 +140,10 @@ class TestBookCopyModel(TestCase):
     number_of_lend_copies = 2
 
     def setUp(self) -> None:
+        self.book = mixer.blend(Book)
         self.reader = mixer.blend(Reader)
-        mixer.cycle(TestBookCopyModel.number_of_storage_copies).blend(BookCopy, reader=None)
-        mixer.cycle(TestBookCopyModel.number_of_lend_copies).blend(BookCopy, reader=self.reader)
+        mixer.cycle(TestBookCopyModel.number_of_storage_copies).blend(BookCopy, book=self.book, reader=None)
+        mixer.cycle(TestBookCopyModel.number_of_lend_copies).blend(BookCopy, book=self.book, reader=self.reader)
 
     def tearDown(self) -> None:
         BookCopy.objects.all().delete()
@@ -150,32 +151,32 @@ class TestBookCopyModel(TestCase):
 
     def test_number_of_all_copies(self):
         self.assertEqual(
-            BookCopy.number_all(),
+            BookCopy.number_all(self.book.id),
             TestBookCopyModel.number_of_storage_copies + TestBookCopyModel.number_of_lend_copies
         )
 
     def test_number_of_storage_copies(self):
-        self.assertEqual(BookCopy.number_in_storage(), TestBookCopyModel.number_of_storage_copies)
+        self.assertEqual(BookCopy.number_in_storage(self.book.id), TestBookCopyModel.number_of_storage_copies)
 
     def test_number_of_lend_copies(self):
-        self.assertEqual(BookCopy.number_lend(), TestBookCopyModel.number_of_lend_copies)
+        self.assertEqual(BookCopy.number_lend(self.book.id), TestBookCopyModel.number_of_lend_copies)
 
     def test_number_check_sum(self):
         self.assertEqual(
-            BookCopy.number_all(),
-            BookCopy.number_in_storage() + BookCopy.number_lend()
+            BookCopy.number_all(self.book.id),
+            BookCopy.number_in_storage(self.book.id) + BookCopy.number_lend(self.book.id)
         )
 
     def test_storage_copies(self):
         copies = BookCopy.objects.filter(reader__isnull=True)
         self.assertListEqual(
             list(copies),
-            list(BookCopy.storage_copies())
+            list(BookCopy.storage_copies(self.book.id))
         )
 
     def test_lend_copies(self):
         copies = BookCopy.objects.filter(reader__isnull=False)
         self.assertListEqual(
             list(copies),
-            list(BookCopy.lend_copies())
+            list(BookCopy.lend_copies(self.book.id))
         )

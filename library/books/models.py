@@ -74,24 +74,24 @@ class BookCopy(models.Model):
         return self.inventory_number
 
     @staticmethod
-    def number_all() -> int:
-        return BookCopy.objects.count()
+    def number_all(book_id: int) -> int:
+        return BookCopy.objects.filter(book__id=book_id).count()
 
     @staticmethod
-    def number_in_storage() -> int:
-        return BookCopy.objects.filter(reader__isnull=True).count()
+    def number_in_storage(book_id: int) -> int:
+        return BookCopy.objects.filter(book__id=book_id, reader__isnull=True).count()
 
     @staticmethod
-    def number_lend() -> int:
-        return BookCopy.objects.filter(reader__isnull=False).count()
+    def number_lend(book_id: int) -> int:
+        return BookCopy.objects.filter(book__id=book_id, reader__isnull=False).count()
 
     @staticmethod
-    def storage_copies():
-        return BookCopy.objects.filter(reader__isnull=True)
+    def storage_copies(book_id: int):
+        return BookCopy.objects.filter(book__id=book_id, reader__isnull=True)
 
     @staticmethod
-    def lend_copies():
-        return BookCopy.objects.filter(reader__isnull=False)
+    def lend_copies(book_id: int):
+        return BookCopy.objects.filter(book__id=book_id, reader__isnull=False)
 
 
 class BookRequest(models.Model):
