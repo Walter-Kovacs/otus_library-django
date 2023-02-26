@@ -31,21 +31,32 @@
         </tbody>
     </table>
 
-    <div class="h3 mt-3">Books</div>
-    <ul class="list-group">
+    <div class="h3 mt-4">Your books</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Book</th>
+          <th scope="col">Inventory number</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for copy in user.reader.bookcopy_set.all %}
-            <li class="list-group-item">
-                <a href="{% url 'book-details' pk=copy.book.pk %}">{{ copy.book.title }}</a>
-                (inventory number: {{ copy.inventory_number }})
-            </li>
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td><a href="{% url 'book-details' pk=copy.book.pk %}">{{ copy.book.title }}</a></td>
+          <td>{{ copy.inventory_number }}</td>
+        </tr>
         {% endfor %}
-    </ul>
-    <div class="h3 mt-3">Book requests</div>
-    <ul class="list-group">
+      </tbody>
+    </table>
+
+    <div class="h3 mt-4">Your book requests</div>
+    <ol class="list-group list-group-numbered">
         {% for request in user.reader.bookrequest_set.all %}
             <li class="list-group-item">
                 <a href="{% url 'book-details' pk=request.book.pk %}">{{ request.book.title }}</a>
             </li>
         {% endfor %}
-    </ul>
+    </ol>
 {% endblock %}
