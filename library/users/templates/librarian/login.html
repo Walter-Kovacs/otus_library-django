@@ -6,6 +6,11 @@
 
 {% block content %}
   <div class="h3">Librarian</div>
+  {% if is_not_staff %}
+  <ul>
+    <li>You are not a librarian (yet)</li>
+  </ul>
+  {% endif %}
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

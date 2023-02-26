@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
 from django.views.generic import (
     DetailView,
@@ -44,7 +44,10 @@ class ReaderCreateView(FormView):
 
 class ReaderLoginView(LoginView):
     template_name = 'reader/login.html'
-    success_url = reverse_lazy('reader-profile')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_not_reader = False
 
     def form_valid(self, form):
         user = form.get_user()
@@ -52,7 +55,22 @@ class ReaderLoginView(LoginView):
         if reader is not None:
             return super().form_valid(form)
         else:
+            self.is_not_reader = True
             return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.is_not_reader:
+            context['is_not_reader'] = True
+            self.is_not_reader = False
+
+        return context
+
+    def get_default_redirect_url(self):
+        if self.next_page:
+            return resolve_url(self.next_page)
+        else:
+            return reverse_lazy('reader-profile')
 
 
 class ReaderLogoutView(LogoutView):

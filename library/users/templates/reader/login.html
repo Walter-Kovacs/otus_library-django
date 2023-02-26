@@ -6,6 +6,11 @@
 
 {% block content %}
   <div class="h3">Reader</div>
+  {% if is_not_reader %}
+  <ul>
+    <li>You are not a reader</li>
+  </ul>
+  {% endif %}
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

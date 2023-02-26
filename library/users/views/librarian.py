@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, resolve_url
 from django.urls import reverse_lazy
 from django.views.generic import (
     FormView,
@@ -74,7 +74,10 @@ class LibrarianListView(AdminLoginRequiredMixin, AdminPassesTestMixin, ListView)
 
 class LibrarianLoginView(LoginView):
     template_name = 'librarian/login.html'
-    success_url = '/'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.is_not_staff = False
 
     def form_valid(self, form):
         user = form.get_user()
@@ -82,7 +85,22 @@ class LibrarianLoginView(LoginView):
         if librarian is not None and librarian.is_active:
             return super().form_valid(form)
         else:
+            self.is_not_staff = True
             return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.is_not_staff:
+            context['is_not_staff'] = True
+            self.is_not_staff = False
+
+        return context
+
+    def get_default_redirect_url(self):
+        if self.next_page:
+            return resolve_url(self.next_page)
+        else:
+            return reverse_lazy('bookrequest-list')
 
 
 class LibrarianLogoutView(LogoutView):
