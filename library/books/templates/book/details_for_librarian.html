@@ -156,10 +156,11 @@
           <ul class="list-group-item">
             {% for copy in all_copies %}
               <li class="list-group-item">
-                <a href="">{{ copy.inventory_number }}</a>
+                {{ copy.inventory_number }}
               </li>
             {% endfor %}
           </ul>
+          <a class="btn btn-primary" href="{% url 'bookcopy-create' %}">Add</a>
       </div>
     </div>
   </div>
