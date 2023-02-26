@@ -16,7 +16,6 @@ class Genre(models.Model):
 class WrittenWork(models.Model):
     title = models.CharField(max_length=200)
     genre = models.ForeignKey(Genre, on_delete=models.PROTECT)
-    description = models.TextField(blank=True)
 
     class Meta:
         ordering = ('title', )

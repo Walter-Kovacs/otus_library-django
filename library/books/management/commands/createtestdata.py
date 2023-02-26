@@ -65,12 +65,10 @@ class Command(BaseCommand):
             {
                 'title': 'The Call of the Wild',
                 'genre': cls.genres['Short novel'],
-                'description': 'A short adventure novel set in Yukon, Canada, during the 1890s Klondike Gold Rush.',
             },
             {
                 'title': 'White Fang',
                 'genre': cls.genres['Novel'],
-                'description': "White Fang is the name of the book's eponymous character, a wild wolfdog.",
             },
         ]
         for data in works_data:
@@ -111,7 +109,6 @@ class Command(BaseCommand):
             publisher=publisher,
             publishing_year=2022,
             abstract='Collection of novels',
-            amount=2,
         )
         cls.book_id = book.id
         print('book:', book.title)
@@ -124,7 +121,7 @@ class Command(BaseCommand):
     def show_created_data(cls):
         print('-' * 50)
         book = Book.objects.get(id=cls.book_id)
-        print(f'"{book.title}" ({book.abstract}), {book.publisher.name}, {book.publishing_year}, amount: {book.amount})')
+        print(f'"{book.title}" ({book.abstract}), {book.publisher.name}, {book.publishing_year}')
 
         for work in book.works.all():
             print(' ' * 4, f'"{work.title}", {work.genre.name}')

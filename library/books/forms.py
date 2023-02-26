@@ -2,7 +2,6 @@ from django import forms
 
 from .models import (
     Author,
-    BookCopy,
     WrittenWork,
 )
 
@@ -37,7 +36,6 @@ class WrittenWorkForm(forms.ModelForm):
             'title',
             'authors',
             'genre',
-            'description',
         )
 
     @property
